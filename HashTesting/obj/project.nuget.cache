@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1pPLr/TwnTlGl5q3saLtgCeAMIinjTw9VKZLp4QYMAbAwUU8KxjRjbMIsh3JGYXjJN0KPd5g4D1rPOsgksUzGQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Tanner\\ISCore\\WINTER 2023\\IS414 Security\\Labs\\Lab2\\HashTesting\\HashTesting\\HashTesting.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Tanner\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.25\\microsoft.netcore.app.host.win-x64.3.1.25.nupkg.sha512"
+  ],
+  "logs": []
+}
