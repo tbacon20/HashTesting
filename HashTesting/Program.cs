@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.IO;
 
 namespace Crypto.NET.HashTesting
 {
@@ -8,8 +9,26 @@ namespace Crypto.NET.HashTesting
     {
         static void Main(string[] args)
         {
-            string data1 = "Hello World!";
+            
+            FilePath fp = new FilePath();
+            string filePath = fp.filePath;
+            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), filePath, "RootBeerTest365A.pdf");
+            using FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            StreamReader streamReader = new StreamReader(fs);
+
+            string fileName2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), filePath, "RootBeerTest365B.pdf");
+            using FileStream fs2 = new FileStream(fileName2, FileMode.Open, FileAccess.Read);
+            StreamReader streamReader2 = new StreamReader(fs2);
+
+            string data1 = streamReader.ReadToEnd();
+            string data2 = streamReader2.ReadToEnd();
+
+            /*
+
+            string data1 = "Hello World";
             string data2 = "Hello World";
+
+            */
 
             HashAlgorithm sha256Hasher = SHA256.Create();
 
