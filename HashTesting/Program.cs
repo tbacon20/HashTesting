@@ -9,19 +9,19 @@ namespace Crypto.NET.HashTesting
     {
         static void Main(string[] args)
         {
-            
+
             FilePath fp = new FilePath();
             string filePath = fp.filePath;
-            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), filePath, "RootBeerTest365A.pdf");
-            using FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            StreamReader streamReader = new StreamReader(fs);
 
-            string fileName2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), filePath, "RootBeerTest365B.pdf");
-            using FileStream fs2 = new FileStream(fileName2, FileMode.Open, FileAccess.Read);
-            StreamReader streamReader2 = new StreamReader(fs2);
+            // Here is an example of checking the hash on two images
+            string data1 = CollectFileData(filePath, "console1.png");
+            string data2 = CollectFileData(filePath, "console2.png");
 
-            string data1 = streamReader.ReadToEnd();
-            string data2 = streamReader2.ReadToEnd();
+            // Here is an example of checking the hash on two pdfs
+            
+            string data3 = CollectFileData(filePath, "RootBeerTest365A.pdf");
+            string data4 = CollectFileData(filePath, "RootBeerTest365B.pdf");
+            
 
             /*
 
@@ -30,29 +30,53 @@ namespace Crypto.NET.HashTesting
 
             */
 
+
+            Console.WriteLine("\nSHA256 hashes: ");
             HashAlgorithm sha256Hasher = SHA256.Create();
 
-
-            byte[] result1Bytes = sha256Hasher.ComputeHash(Encoding.ASCII.GetBytes(data1)); // compute the hash of data1
-            string hexResults1 = BitConverter.ToString(result1Bytes).Replace("-", ""); // convert the resultant byte array to a hex string
-            Console.WriteLine(hexResults1);
-
-            byte[] result2Bytes = sha256Hasher.ComputeHash(Encoding.ASCII.GetBytes(data2));  // compute the hash of data2
-            string hexResults2 = BitConverter.ToString(result2Bytes).Replace("-", ""); // convert the resultant byte array to a hex string
-            Console.WriteLine(hexResults2);
+            GetHashResults(sha256Hasher, data1);
+            GetHashResults(sha256Hasher, data2);
+            GetHashResults(sha256Hasher, data3);
+            GetHashResults(sha256Hasher, data4);
 
 
             // Let's do the same with a different hashing Algorithm
-
+            Console.WriteLine("\nSHA1 hashes: ");
             HashAlgorithm sha1Hasher = SHA1.Create();
 
-            result1Bytes = sha1Hasher.ComputeHash(Encoding.ASCII.GetBytes(data1)); // compute the hash of data1
-            hexResults1 = BitConverter.ToString(result1Bytes).Replace("-", ""); // convert the resultant byte array to a hex string
-            Console.WriteLine(hexResults1);
+            GetHashResults(sha1Hasher, data1);
+            GetHashResults(sha1Hasher, data2);
+            GetHashResults(sha1Hasher, data3);
+            GetHashResults(sha1Hasher, data4);
 
-            result2Bytes = sha1Hasher.ComputeHash(Encoding.ASCII.GetBytes(data2));  // compute the hash of data2
-            hexResults2 = BitConverter.ToString(result2Bytes).Replace("-", ""); // convert the resultant byte array to a hex string
-            Console.WriteLine(hexResults2);
+            // Finally, with MD5
+            Console.WriteLine("\nMD5 hashes: ");
+            HashAlgorithm md5Hasher = MD5.Create();
+
+            GetHashResults(md5Hasher, data1);
+            GetHashResults(md5Hasher, data2);
+            GetHashResults(md5Hasher, data3);
+            GetHashResults(md5Hasher, data4);
+        }
+
+        // This is a method for collecting the data from a file
+        static string CollectFileData(string filePath, string fileNameString)
+        {
+
+            string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), filePath, fileNameString);
+            using FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            StreamReader streamReader = new StreamReader(fs);
+
+            string dataString = streamReader.ReadToEnd();
+
+            return dataString;
+        }
+
+        static void GetHashResults(HashAlgorithm hashTypeName, string data)
+        {
+            byte[] result1Bytes = hashTypeName.ComputeHash(Encoding.ASCII.GetBytes(data)); // compute the hash of data1
+            string hexResults1 = BitConverter.ToString(result1Bytes).Replace("-", ""); // convert the resultant byte array to a hex string
+            Console.WriteLine(hexResults1);
         }
     }
 }
