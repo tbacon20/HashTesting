@@ -64,6 +64,7 @@ namespace Crypto.NET.HashTesting
         {
 
             string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), filePath, fileNameString);
+            
             using FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             StreamReader streamReader = new StreamReader(fs);
 
